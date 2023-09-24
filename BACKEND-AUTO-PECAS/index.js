@@ -5,6 +5,7 @@ const userRoute = require('./routes/user');
 const supplierRoute = require('./routes/supplier');
 const productRoute = require('./routes/product');
 const billRoute = require('./routes/bill');
+const dashboard = require('./routes/dashboard');
 const app = express();
 
 app.use(cors());
@@ -14,5 +15,6 @@ app.use('/user', userRoute);
 app.use('/supplier', supplierRoute);
 app.use('/product', productRoute);
 app.use('/bill',billRoute);
+app.use('/dashboard',dashboard);
 
 module.exports = app;
