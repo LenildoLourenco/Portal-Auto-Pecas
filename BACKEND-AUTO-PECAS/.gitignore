@@ -1,3 +1,4 @@
 node_modules
 .env
 table.sql
+generated_pdf

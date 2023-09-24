@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <style>
+            table{
+                font-family: arial,sans-serif;
+                border-collapse: collapse;
+                width: 100%
+            }
+
+            td,th{
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <h3 style="text-align: center">Sistema Auto Peças e Serviços</h3>
+
+        <h3 style="text-align: center">Nº OS: <%= id %></h3>
+
+        <h3>Dados do Cliente:</h3>
+        <table>
+            <tr>
+                <th>Nome: <%= name %></th>
+                <th>Email: <%= email %></th>
+                <th>CPF: <%= cpf %></th>
+            </tr>
+            <tr>
+                <th>Endereço: <%= address %></th>
+                <th>Contato: <%= contactNumber %></th>
+                <th>Forma de Pagamento: <%= paymentMethod %></th>
+            </tr>
+        </table>
+
+        <h3>Detalhes do Serviço:</h3>
+        <table>
+            <tr>
+                <th>Observações: <%= observation %></th>
+                <th>Mecânico Responsável: <%= mechanic %></th>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th>Nome do Produto</th>
+                <th>Fornecedor</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+                <th>Total</th>
+            </tr>
+            <% if(productDetails.length > 0) { %>
+            <% productDetails.forEach(product => { %>
+                <tr>
+                    <td><%= product.name %></td>
+                    <td><%= product.supplier %></td>
+                    <td><%= product.quantity %></td>
+                    <td><%= product.price %></td>
+                    <td><%= product.total %></td>
+                </tr>
+                <% }); %>
+                <% } %>
+        </table>
+        <h3>Total: <%= totalAmount %></h3>
+        <h3>Obrigado pela visita. Volte sempre!!</h3>
+    </body>
+</html>
