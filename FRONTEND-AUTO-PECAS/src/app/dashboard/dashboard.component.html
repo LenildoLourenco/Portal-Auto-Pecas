@@ -1,0 +1,64 @@
+<body>
+    <mat-card>
+        <b><span>Dashboard</span></b>
+    </mat-card>
+    <br>
+    <div class="row">
+        <div class="column">
+            <div class="card">
+                <div class="container">
+                    <h2 class="title">Total de Usuários</h2>
+                    <h1 class="title">{{data?.user}}</h1>
+                    <p><button class="button" [routerLink]="['/auto-pecas/user']">Ver Usuários</button></p>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card">
+                <div class="container">
+                    <h2 class="title">Total de Clientes</h2>
+                    <h1 class="title">{{data?.client}}</h1>
+                    <p><button class="button" [routerLink]="['/auto-pecas/client']">Ver Clientes</button></p>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card">
+                <div class="container">
+                    <h2 class="title">Total de Mecânicos</h2>
+                    <h1 class="title">{{data?.mechanic}}</h1>
+                    <p><button class="button" [routerLink]="['/auto-pecas/mechanic']">Ver Mecânicos</button></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <div class="card">
+                <div class="container">
+                    <h2 class="title">Total de Fornecedores</h2>
+                    <h1 class="title">{{data?.supplier}}</h1>
+                    <p><button class="button" [routerLink]="['/auto-pecas/supplier']">Ver Fornecedores</button></p>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card">
+                <div class="container">
+                    <h2 class="title">Total de Produtos</h2>
+                    <h1 class="title">{{data?.product}}</h1>
+                    <p><button class="button" [routerLink]="['/auto-pecas/product']">Ver Produtos</button></p>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card">
+                <div class="container">
+                    <h2 class="title">Total de Contas</h2>
+                    <h1 class="title">{{data?.bill}}</h1>
+                    <p><button class="button" [routerLink]="['/auto-pecas/bill']">Ver Contas</button></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
