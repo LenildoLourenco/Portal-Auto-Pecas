@@ -1,0 +1,25 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span class="title-center">{{dialogData.action}} Fornecedor</span>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="supplierForm">
+        <div fxFlex fxLayout="column">
+            <div fxFlex fxLayout="row wrap">
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Nome</mat-label>
+                    <input matInput formControlName="name" required>
+                    <mat-error *ngIf="supplierForm.controls.name.touched && supplierForm.controls.name.invalid">
+                        <span *ngIf="supplierForm.controls.name.errors.required">Este campo é obrigatório</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
+        [disabled]="!(supplierForm.valid && supplierForm.dirty)">{{action}}</button>
+    <button mat-raised-button color="primary" mat-dialog-close>Fechar</button>
+</mat-dialog-actions>
