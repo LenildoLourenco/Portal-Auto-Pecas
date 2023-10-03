@@ -30,9 +30,9 @@ router.get('/get', auth.authenticateToken, (req, res, next) => {
 })
 
 router.patch('/update', auth.authenticateToken, checkRole.checkRole, (req, res, next) => {
-    let product = req.body;
+    let supplier = req.body;
     var query = "update supplier set name=?,address=?,phone=?,email=? where id=?";
-    connection.query(query, [product.name, product.address, product.phone, product.email, product.id], (err, results) => {
+    connection.query(query, [supplier.name, supplier.address, supplier.phone, supplier.email, supplier.id], (err, results) => {
         if (!err) {
             if (results.affectedRows == 0) {
                 return res.status(404).json({ message: "O ID do fornecedor não foi encontrado" });

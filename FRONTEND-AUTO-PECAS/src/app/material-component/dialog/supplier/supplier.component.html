@@ -14,6 +14,31 @@
                         <span *ngIf="supplierForm.controls.name.errors.required">Este campo é obrigatório</span>
                     </mat-error>
                 </mat-form-field>
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" required>
+                    <mat-error *ngIf="supplierForm.controls.email.touched && supplierForm.controls.email.invalid">
+                        <span *ngIf="supplierForm.controls.email.errors.required">Este campo é obrigatório</span>
+                        <span *ngIf="supplierForm.controls.email.errors.pattern">Este email é inválido</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex fxLayout="row wrap">
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Telefone</mat-label>
+                    <input matInput formControlName="phone" required>
+                    <mat-error *ngIf="supplierForm.controls.phone.touched && supplierForm.controls.phone.invalid">
+                        <span *ngIf="supplierForm.controls.phone.errors.required">Este campo é obrigatório</span>
+                        <span *ngIf="supplierForm.controls.phone.errors.pattern">Este telefone é inválido</span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Endereço</mat-label>
+                    <input matInput formControlName="address" required>
+                    <mat-error *ngIf="supplierForm.controls.address.touched && supplierForm.controls.address.invalid">
+                        <span *ngIf="supplierForm.controls.address.errors.required">Este campo é obrigatório</span>
+                    </mat-error>
+                </mat-form-field>
             </div>
         </div>
     </form>

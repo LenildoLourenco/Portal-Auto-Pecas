@@ -4,9 +4,9 @@ const router = express.Router();
 var auth = require('../services/authentication');
 var checkRole = require('../services/checkRole');
 
-router.post('/add', auth.authenticateToken, checkRole.checkRole, (req, res) => {
+router.post('/add', auth.authenticateToken, checkRole.checkRole, (req, res, next) => {
     let product = req.body;
-    var query = "insert into product(name,supplierId,description,price,amount,status) values(?,?,?,?,?,'true')";
+    var query = "insert into product (name,supplierId,description,price,amount,status) values(?,?,?,?,?,'true')";
     connection.query(query, [product.name, product.supplierId, product.description, product.price, product.amount], (err, results) => {
         if (!err) {
             return res.status(200).json({ message: "Produto adicionado com sucesso" });

@@ -14,7 +14,7 @@ import { SupplierComponent } from '../dialog/supplier/supplier.component';
   styleUrls: ['./manage-supplier.component.scss']
 })
 export class ManageSupplierComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'edit'];
+  displayedColumns: string[] = ['id', 'name', 'email', 'contactNumber', 'address', 'edit'];
   dataSource: any;
   responseMessage: any;
 

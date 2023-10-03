@@ -1,41 +1,60 @@
 import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ProductService } from 'src/app/services/product.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SupplierService } from 'src/app/services/supplier.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 
 @Component({
-  selector: 'app-supplier',
-  templateUrl: './supplier.component.html',
-  styleUrls: ['./supplier.component.scss']
+  selector: 'app-product',
+  templateUrl: './product.component.html',
+  styleUrls: ['./product.component.scss']
 })
-export class SupplierComponent implements OnInit {
-  onAddSupplier = new EventEmitter();
-  onEditSupplier = new EventEmitter();
-  supplierForm: any = FormGroup;
+export class ProductComponent implements OnInit {
+  onAddProduct = new EventEmitter();
+  onEditProduct = new EventEmitter();
+  productForm: any = FormGroup;
   dialogAction: any = "Adicionar";
   action: any = "Adicionar";
   responseMessage: any;
+  suppliers: any = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public dialogData: any,
     private formBuilder: FormBuilder,
+    private productService: ProductService,
+    public dialogRef: MatDialogRef<ProductComponent>,
     private supplierService: SupplierService,
-    public dialogRef: MatDialogRef<SupplierComponent>,
     private snackbarService: SnackbarService) { }
 
   ngOnInit(): void {
-    this.supplierForm = this.formBuilder.group({
+    this.productForm = this.formBuilder.group({
       name: [null, [Validators.required]],
-      email: [null, [Validators.required, Validators.pattern(GlobalConstants.emailRegex)]],
-      phone: [null, [Validators.required, Validators.pattern(GlobalConstants.contactNumberRegex)]],
-      address: [null, [Validators.required]]
+      supplierId: [null, [Validators.required]],
+      description: [null, [Validators.required]],
+      price: [null, [Validators.required]],
+      amount: [null, [Validators.required]]
     });
     if (this.dialogData.action === 'Editar') {
       this.dialogAction = "Editar";
       this.action = "Editar";
-      this.supplierForm.patchValue(this.dialogData.data);
+      this.productForm.patchValue(this.dialogData.data);
     }
+    this.getSuppliers();
+  }
+
+  getSuppliers() {
+    this.supplierService.getSupplierys().subscribe((response: any) => {
+      this.suppliers = response;
+    }, (error: any) => {
+      if (error.error?.message) {
+        this.responseMessage = error.error?.message;
+      }
+      else {
+        this.responseMessage = GlobalConstants.genericError;
+      }
+      this.snackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);
+    })
   }
 
   handleSubmit() {
@@ -49,16 +68,17 @@ export class SupplierComponent implements OnInit {
 
   add() {
     debugger;
-    var formData = this.supplierForm.value;
+    var formData = this.productForm.value;
     var data = {
       name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      address: formData.address
+      supplierId: formData.supplierId,
+      description: formData.description,
+      price: formData.price,
+      amount: formData.amount
     }
-    this.supplierService.add(data).subscribe((response: any) => {
+    this.productService.add(data).subscribe((response: any) => {
       this.dialogRef.close();
-      this.onAddSupplier.emit();
+      this.onAddProduct.emit();
       this.responseMessage = response.message;
       this.snackbarService.openSnackBar(this.responseMessage, "success");
     }, (error: any) => {
@@ -74,17 +94,18 @@ export class SupplierComponent implements OnInit {
   }
 
   edit() {
-    var formData = this.supplierForm.value;
+    var formData = this.productForm.value;
     var data = {
       id: this.dialogData.data.id,
       name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      address: formData.address
+      supplierId: formData.supplierId,
+      description: formData.description,
+      price: formData.price,
+      amount: formData.amount
     }
-    this.supplierService.update(data).subscribe((response: any) => {
+    this.productService.update(data).subscribe((response: any) => {
       this.dialogRef.close();
-      this.onEditSupplier.emit();
+      this.onEditProduct.emit();
       this.responseMessage = response.message;
       this.snackbarService.openSnackBar(this.responseMessage, "success");
     }, (error: any) => {
