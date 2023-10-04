@@ -1,0 +1,60 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span class="title-center">{{dialogData.action}} Cliente</span>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="clientForm">
+        <div fxFlex fxLayout="column">
+            <div fxFlex fxLayout="row wrap">
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Nome</mat-label>
+                    <input matInput formControlName="name" [readonly]="disabled" required>
+                    <mat-error *ngIf="clientForm.controls.name.touched && clientForm.controls.name.invalid">
+                        <span *ngIf="clientForm.controls.name.errors.required">Este campo é obrigatório</span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" required>
+                    <mat-error *ngIf="clientForm.controls.email.touched && clientForm.controls.email.invalid">
+                        <span *ngIf="clientForm.controls.email.errors.required">Este campo é obrigatório</span>
+                        <span *ngIf="clientForm.controls.email.errors.pattern">Este email é inválido</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex fxLayout="row wrap">
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>CPF</mat-label>
+                    <input matInput formControlName="cpf" maxlength="11" [readonly]="disabled" required>
+                    <mat-error *ngIf="clientForm.controls.cpf.touched && clientForm.controls.cpf.invalid">
+                        <span *ngIf="clientForm.controls.cpf.errors.required">Este campo é obrigatório</span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Contato</mat-label>
+                    <input matInput formControlName="contactNumber" required>
+                    <mat-error
+                        *ngIf="clientForm.controls.contactNumber.touched && clientForm.controls.contactNumber.invalid">
+                        <span *ngIf="clientForm.controls.contactNumber.errors.required">Este campo é obrigatório</span>
+                        <span *ngIf="clientForm.controls.contactNumber.errors.pattern">Este contato é inválido</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex fxLayout="row wrap">
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Endereço</mat-label>
+                    <input matInput formControlName="address" maxlength="50" required>
+                    <mat-error *ngIf="clientForm.controls.address.touched && clientForm.controls.address.invalid">
+                        <span *ngIf="clientForm.controls.address.errors.required">Este campo é obrigatório</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
+        [disabled]="!(clientForm.valid && clientForm.dirty)">{{action}}</button>
+    <button mat-raised-button color="primary" mat-dialog-close>Fechar</button>
+</mat-dialog-actions>

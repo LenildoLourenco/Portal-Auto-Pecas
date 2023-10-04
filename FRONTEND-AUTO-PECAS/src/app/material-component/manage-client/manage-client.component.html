@@ -1,7 +1,7 @@
 <mat-card>
-    <b><span>Gerenciar Produto</span></b>
+    <b><span>Gerenciar Cliente</span></b>
     <button mat-flat-button color="primary" class="float-right" (click)="handleAddAction()">Adicionar
-        Produto</button>
+        Cliente</button>
 </mat-card>
 <hr>
 <mat-card>
@@ -21,21 +21,21 @@
             <th mat-header-cell *matHeaderCellDef> Nome</th>
             <td mat-cell *matCellDef="let element">{{element.name}}</td>
         </ng-container>
-        <ng-container matColumnDef="supplierName">
-            <th mat-header-cell *matHeaderCellDef> Nome do Fornecedor</th>
-            <td mat-cell *matCellDef="let element">{{element.supplierName}}</td>
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email</th>
+            <td mat-cell *matCellDef="let element">{{element.email}}</td>
         </ng-container>
-        <ng-container matColumnDef="description">
-            <th mat-header-cell *matHeaderCellDef> Descrição</th>
-            <td mat-cell *matCellDef="let element">{{element.description}}</td>
+        <ng-container matColumnDef="cpf">
+            <th mat-header-cell *matHeaderCellDef> CPF</th>
+            <td mat-cell *matCellDef="let element">{{element.cpf}}</td>
         </ng-container>
-        <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef> Preço</th>
-            <td mat-cell *matCellDef="let element">{{element.price}}</td>
+        <ng-container matColumnDef="contactNumber">
+            <th mat-header-cell *matHeaderCellDef> Contato</th>
+            <td mat-cell *matCellDef="let element">{{element.contactNumber}}</td>
         </ng-container>
-        <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef> Quantidade</th>
-            <td mat-cell *matCellDef="let element">{{element.amount}}</td>
+        <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef> Endereço</th>
+            <td mat-cell *matCellDef="let element">{{element.address}}</td>
         </ng-container>
         <ng-container matColumnDef="edit">
             <th mat-header-cell *matHeaderCellDef> Ações</th>
@@ -47,7 +47,7 @@
                     <mat-icon>delete</mat-icon>
                 </button>
                 <mat-slide-toggle (change)="onChange($event.checked,element.id)"
-                    matTooltip="Ativar ou Desativar Produto" [checked]="element.status"></mat-slide-toggle>
+                    matTooltip="Ativar ou Desativar Cliente" [checked]="element.status"></mat-slide-toggle>
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>

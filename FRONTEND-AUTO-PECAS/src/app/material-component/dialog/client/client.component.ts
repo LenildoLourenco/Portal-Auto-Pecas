@@ -1,60 +1,44 @@
 import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ProductService } from 'src/app/services/product.service';
+import { ClientService } from 'src/app/services/client.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
-import { SupplierService } from 'src/app/services/supplier.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss']
+  selector: 'app-client',
+  templateUrl: './client.component.html',
+  styleUrls: ['./client.component.scss']
 })
-export class ProductComponent implements OnInit {
-  onAddProduct = new EventEmitter();
-  onEditProduct = new EventEmitter();
-  productForm: any = FormGroup;
+export class ClientComponent implements OnInit {
+  onAddClient = new EventEmitter();
+  onEditClient = new EventEmitter();
+  clientForm: any = FormGroup;
   dialogAction: any = "Adicionar";
   action: any = "Adicionar";
   responseMessage: any;
-  suppliers: any = [];
+  disabled: boolean = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) public dialogData: any,
     private formBuilder: FormBuilder,
-    private productService: ProductService,
-    public dialogRef: MatDialogRef<ProductComponent>,
-    private supplierService: SupplierService,
+    private clientService: ClientService,
+    public dialogRef: MatDialogRef<ClientComponent>,
     private snackbarService: SnackbarService) { }
 
   ngOnInit(): void {
-    this.productForm = this.formBuilder.group({
+    this.clientForm = this.formBuilder.group({
       name: [null, [Validators.required]],
-      supplierId: [null, [Validators.required]],
-      description: [null, [Validators.required]],
-      price: [null, [Validators.required]],
-      amount: [null, [Validators.required]]
+      email: [null, [Validators.required, Validators.pattern(GlobalConstants.emailRegex)]],
+      cpf: [null, [Validators.required]],
+      contactNumber: [null, [Validators.required, Validators.pattern(GlobalConstants.contactNumberRegex)]],
+      address: [null, [Validators.required]]
     });
     if (this.dialogData.action === 'Editar') {
       this.dialogAction = "Editar";
       this.action = "Editar";
-      this.productForm.patchValue(this.dialogData.data);
+      this.disabled = true;
+      this.clientForm.patchValue(this.dialogData.data);
     }
-    this.getSuppliers();
-  }
-
-  getSuppliers() {
-    this.supplierService.getSupplierys().subscribe((response: any) => {
-      this.suppliers = response;
-    }, (error: any) => {
-      if (error.error?.message) {
-        this.responseMessage = error.error?.message;
-      }
-      else {
-        this.responseMessage = GlobalConstants.genericError;
-      }
-      this.snackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);
-    })
   }
 
   handleSubmit() {
@@ -67,17 +51,17 @@ export class ProductComponent implements OnInit {
   }
 
   add() {
-    var formData = this.productForm.value;
+    var formData = this.clientForm.value;
     var data = {
       name: formData.name,
-      supplierId: formData.supplierId,
-      description: formData.description,
-      price: formData.price,
-      amount: formData.amount
+      email: formData.email,
+      cpf: formData.cpf,
+      contactNumber: formData.contactNumber,
+      address: formData.address
     }
-    this.productService.add(data).subscribe((response: any) => {
+    this.clientService.add(data).subscribe((response: any) => {
       this.dialogRef.close();
-      this.onAddProduct.emit();
+      this.onAddClient.emit();
       this.responseMessage = response.message;
       this.snackbarService.openSnackBar(this.responseMessage, "success");
     }, (error: any) => {
@@ -93,18 +77,18 @@ export class ProductComponent implements OnInit {
   }
 
   edit() {
-    var formData = this.productForm.value;
+    var formData = this.clientForm.value;
     var data = {
       id: this.dialogData.data.id,
       name: formData.name,
-      supplierId: formData.supplierId,
-      description: formData.description,
-      price: formData.price,
-      amount: formData.amount
+      email: formData.email,
+      cpf: formData.cpf,
+      contactNumber: formData.contactNumber,
+      address: formData.address
     }
-    this.productService.update(data).subscribe((response: any) => {
+    this.clientService.update(data).subscribe((response: any) => {
       this.dialogRef.close();
-      this.onEditProduct.emit();
+      this.onEditClient.emit();
       this.responseMessage = response.message;
       this.snackbarService.openSnackBar(this.responseMessage, "success");
     }, (error: any) => {
