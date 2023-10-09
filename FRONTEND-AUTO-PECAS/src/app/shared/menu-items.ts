@@ -9,9 +9,10 @@ export interface Menu {
 
 const MENUITEMS = [
     { state: 'dashboard', name: 'Dashboard', icon: 'dashboard', role: '' },
-    { state: 'supplier', name: 'Gerenciar Fornecedor', icon: 'category', role: 'administrador' },
-    { state: 'product', name: 'Gerenciar Produto', icon: 'inventory_2', role: 'administrador' },
-    { state: 'client', name: 'Gerenciar Cliente', icon: 'groups', role: 'administrador' }
+    { state: 'supplier', name: 'Gerenciar Fornecedores', icon: 'category', role: 'administrador' },
+    { state: 'product', name: 'Gerenciar Produtos', icon: 'inventory_2', role: 'administrador' },
+    { state: 'client', name: 'Gerenciar Clientes', icon: 'groups', role: 'administrador' },
+    { state: 'mechanic', name: 'Gerenciar Mecânicos', icon: 'assignment_ind', role: 'administrador' }
 ];
 
 @Injectable()

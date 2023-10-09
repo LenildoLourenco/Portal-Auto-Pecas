@@ -1,0 +1,33 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span class="title-center">{{dialogData.action}} Mecânico</span>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="mechanicForm">
+        <div fxFlex fxLayout="column">
+            <div fxFlex fxLayout="row wrap">
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Nome</mat-label>
+                    <input matInput formControlName="name" [readonly]="disabled" required>
+                    <mat-error *ngIf="mechanicForm.controls.name.touched && mechanicForm.controls.name.invalid">
+                        <span *ngIf="mechanicForm.controls.name.errors.required">Este campo é obrigatório</span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Especialidade</mat-label>
+                    <input matInput formControlName="specialty" required>
+                    <mat-error
+                        *ngIf="mechanicForm.controls.specialty.touched && mechanicForm.controls.specialty.invalid">
+                        <span *ngIf="mechanicForm.controls.specialty.errors.required">Este campo é obrigatório</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
+        [disabled]="!(mechanicForm.valid && mechanicForm.dirty)">{{action}}</button>
+    <button mat-raised-button color="primary" mat-dialog-close>Fechar</button>
+</mat-dialog-actions>

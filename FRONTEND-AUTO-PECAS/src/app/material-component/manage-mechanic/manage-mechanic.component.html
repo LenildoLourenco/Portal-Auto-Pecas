@@ -1,7 +1,7 @@
 <mat-card>
-    <b><span>Gerenciar Produtos</span></b>
+    <b><span>Gerenciar Mecânicos</span></b>
     <button mat-flat-button color="primary" class="float-right" (click)="handleAddAction()">Adicionar
-        Produto</button>
+        Mecânico</button>
 </mat-card>
 <hr>
 <mat-card>
@@ -21,21 +21,9 @@
             <th mat-header-cell *matHeaderCellDef> Nome</th>
             <td mat-cell *matCellDef="let element">{{element.name}}</td>
         </ng-container>
-        <ng-container matColumnDef="supplierName">
-            <th mat-header-cell *matHeaderCellDef> Nome do Fornecedor</th>
-            <td mat-cell *matCellDef="let element">{{element.supplierName}}</td>
-        </ng-container>
-        <ng-container matColumnDef="description">
-            <th mat-header-cell *matHeaderCellDef> Descrição</th>
-            <td mat-cell *matCellDef="let element">{{element.description}}</td>
-        </ng-container>
-        <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef> Preço</th>
-            <td mat-cell *matCellDef="let element">{{element.price}}</td>
-        </ng-container>
-        <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef> Quantidade</th>
-            <td mat-cell *matCellDef="let element">{{element.amount}}</td>
+        <ng-container matColumnDef="specialty">
+            <th mat-header-cell *matHeaderCellDef> Especialidade</th>
+            <td mat-cell *matCellDef="let element">{{element.specialty}}</td>
         </ng-container>
         <ng-container matColumnDef="edit">
             <th mat-header-cell *matHeaderCellDef> Ações</th>
@@ -47,7 +35,7 @@
                     <mat-icon>delete</mat-icon>
                 </button>
                 <mat-slide-toggle (change)="onChange($event.checked,element.id)"
-                    matTooltip="Ativar ou Desativar Produto" [checked]="element.status"></mat-slide-toggle>
+                    matTooltip="Ativar ou Desativar Mecânico" [checked]="element.status"></mat-slide-toggle>
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
