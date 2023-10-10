@@ -1,0 +1,66 @@
+<mat-card>
+    <b><span>Gerenciar Ordens de Serviço</span></b>
+    <button mat-flat-button color="primary" class="float-right" [disabled]="validateSubmit()" (click)="submitAction()">Enviar e gerar O.S</button>
+</mat-card>
+<hr>
+<mat-card>
+    <b><span>Detalhes do Cliente</span></b>
+    <form [formGroup]="manageOrderForm">
+        <div fxFlex fxLayout="column">
+            <div fxLayout="row wrap">
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Nome</mat-label>
+                    <input matInput formControlName="name" required>
+                    <mat-error *ngIf="manageOrderForm.controls.name.touched && manageOrderForm.controls.name.invalid">
+                        <span *ngIf="manageOrderForm.controls.name.errors.required">Este campo é obrigatório</span>
+                        <span *ngIf="manageOrderForm.controls.name.errors.pattern">Este nome é inválido</span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" required>
+                    <mat-error *ngIf="manageOrderForm.controls.email.touched && manageOrderForm.controls.email.invalid">
+                        <span *ngIf="manageOrderForm.controls.email.errors.required">Este campo é obrigatório</span>
+                        <span *ngIf="manageOrderForm.controls.email.errors.pattern">Este email é inválido</span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>CPF</mat-label>
+                    <input matInput formControlName="cpf" required>
+                    <mat-error *ngIf="manageOrderForm.controls.cpf.touched && manageOrderForm.controls.cpf.invalid">
+                        <span *ngIf="manageOrderForm.controls.cpf.errors.required">Este campo é obrigatório</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row wrap">
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Contato</mat-label>
+                    <input matInput formControlName="contactNumber" required>
+                    <mat-error *ngIf="manageOrderForm.controls.contactNumber.touched && manageOrderForm.controls.contactNumber.invalid">
+                        <span *ngIf="manageOrderForm.controls.contactNumber.errors.required">Este campo é obrigatório</span>
+                        <span *ngIf="manageOrderForm.controls.name.errors.pattern">Este contato é inválido</span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Endereço</mat-label>
+                    <input matInput formControlName="address" required>
+                    <mat-error *ngIf="manageOrderForm.controls.address.touched && manageOrderForm.controls.address.invalid">
+                        <span *ngIf="manageOrderForm.controls.address.errors.required">Este campo é obrigatório</span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Forma de Pagamento</mat-label>
+                    <mat-select matInput formControlName="paymentMethod" required>
+                        <mat-option value="Cash">Dinheiro</mat-option>
+                        <mat-option value="Credit Card">Cartão de Crédito</mat-option>
+                        <mat-option value="Debit Card">Cartão de Débito</mat-option>
+                        <mat-option value="Pix">Pix</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="manageOrderForm.controls.paymentMethod.touched && manageOrderForm.controls.paymentMethod.invalid">
+                        <span *ngIf="manageOrderForm.controls.paymentMethod.errors.required">Este campo é obrigatório</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</mat-card>
