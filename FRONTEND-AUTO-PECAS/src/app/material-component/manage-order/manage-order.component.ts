@@ -7,7 +7,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SupplierService } from 'src/app/services/supplier.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 import { saveAs } from 'file-saver';
-import { throwToolbarMixedModesError } from '@angular/material/toolbar';
+import { MechanicService } from 'src/app/services/mechanic.service';
 
 @Component({
   selector: 'app-manage-order',
@@ -19,6 +19,7 @@ export class ManageOrderComponent implements OnInit {
   dataSource: any = [];
   manageOrderForm: any = FormGroup;
   suppliers: any = [];
+  mechanics: any = [];
   products: any = [];
   price: any;
   totalAmount: number = 0
@@ -27,6 +28,7 @@ export class ManageOrderComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private supplierService: SupplierService,
     private productService: ProductService,
+    private mechanicService: MechanicService,
     private snackbarService: SnackbarService,
     private billService: BillService,
     private ngxService: NgxUiLoaderService) { }
@@ -34,6 +36,7 @@ export class ManageOrderComponent implements OnInit {
   ngOnInit(): void {
     this.ngxService.start();
     this.getSuppliers();
+    this.getMechanics();
     this.manageOrderForm = this.formBuilder.group({
       name: [null, [Validators.required, Validators.pattern(GlobalConstants.nameRegex)]],
       email: [null, [Validators.required, Validators.pattern(GlobalConstants.emailRegex)]],
@@ -43,6 +46,8 @@ export class ManageOrderComponent implements OnInit {
       paymentMethod: [null, [Validators.required]],
       product: [null, [Validators.required]],
       supplier: [null, [Validators.required]],
+      mechanic: [null, [Validators.required]],
+      observation: [null, [Validators.required]],
       amount: [null, [Validators.required]],
       price: [null, [Validators.required]],
       total: [0, [Validators.required]]
@@ -53,6 +58,22 @@ export class ManageOrderComponent implements OnInit {
     this.supplierService.getSupplierys().subscribe((response: any) => {
       this.ngxService.stop();
       this.suppliers = response;
+    }, (error: any) => {
+      this.ngxService.stop();
+      if (error.error?.message) {
+        this.responseMessage = error.error?.message;
+      }
+      else {
+        this.responseMessage = GlobalConstants.genericError;
+      }
+      this.snackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);
+    })
+  }
+
+  getMechanics() {
+    this.mechanicService.getMechanics().subscribe((response: any) => {
+      this.ngxService.stop();
+      this.mechanics = response;
     }, (error: any) => {
       this.ngxService.stop();
       if (error.error?.message) {
@@ -159,10 +180,12 @@ export class ManageOrderComponent implements OnInit {
       name: formData.name,
       email: formData.email,
       contactNumber: formData.contactNumber,
-      cpf: formData.email,
-      address: formData.email,
+      cpf: formData.cpf,
+      address: formData.address,
+      mechanic: formData.mechanic,
+      observation: formData.observation,
       paymentMethod: formData.paymentMethod,
-      totalAmount: formData.totalAmount,
+      totalAmount: this.totalAmount,
       productDetails: JSON.stringify(this.dataSource)
     }
     this.billService.generateReport(data).subscribe((response: any) => {

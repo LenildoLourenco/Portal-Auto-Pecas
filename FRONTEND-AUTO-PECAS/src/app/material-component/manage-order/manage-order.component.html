@@ -38,7 +38,7 @@
                     <input matInput formControlName="contactNumber" required>
                     <mat-error *ngIf="manageOrderForm.controls.contactNumber.touched && manageOrderForm.controls.contactNumber.invalid">
                         <span *ngIf="manageOrderForm.controls.contactNumber.errors.required">Este campo é obrigatório</span>
-                        <span *ngIf="manageOrderForm.controls.name.errors.pattern">Este contato é inválido</span>
+                        <span *ngIf="manageOrderForm.controls.ContactNumber.errors.pattern">Este contato é inválido</span>
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" fxFlex>
@@ -51,9 +51,9 @@
                 <mat-form-field appearance="fill" fxFlex>
                     <mat-label>Forma de Pagamento</mat-label>
                     <mat-select matInput formControlName="paymentMethod" required>
-                        <mat-option value="Cash">Dinheiro</mat-option>
-                        <mat-option value="Credit Card">Cartão de Crédito</mat-option>
-                        <mat-option value="Debit Card">Cartão de Débito</mat-option>
+                        <mat-option value="Dinheiro">Dinheiro</mat-option>
+                        <mat-option value="Cartão de Crédito">Cartão de Crédito</mat-option>
+                        <mat-option value="Cartão de Débito">Cartão de Débito</mat-option>
                         <mat-option value="Pix">Pix</mat-option>
                     </mat-select>
                     <mat-error *ngIf="manageOrderForm.controls.paymentMethod.touched && manageOrderForm.controls.paymentMethod.invalid">
@@ -64,3 +64,121 @@
         </div>
     </form>
 </mat-card>
+<hr>
+<mat-card>
+<b><span>Selecione o(s) Produto(s)</span></b>
+<form [formGroup]="manageOrderForm">
+    <div fxFlex fxLayout="column">
+        <div fxLayout="row wrap">
+            <mat-form-field appearance="fill" fxFlex>
+                <mat-label>Fornecedor</mat-label>
+                <mat-select formControlName="supplier" (selectionChange)="getProductsBySupplier($event.value)">
+                    <mat-option *ngFor="let supplier of suppliers" [value]="supplier">{{supplier.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" fxFlex>
+                <mat-label>Produto</mat-label>
+                <mat-select formControlName="product" (selectionChange)="getProductDetails($event.value)">
+                    <mat-option *ngFor="let product of products" [value]="product">{{product.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" fxFlex>
+                <mat-label>Preço</mat-label>
+                <input matInput formControlName="price" required readonly>
+                <mat-error *ngIf="manageOrderForm.controls.price.touched && manageOrderForm.controls.price.invalid">
+                    <span *ngIf="manageOrderForm.controls.price.errors.required">Este campo é obrigatório</span>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" fxFlex>
+                <mat-label>Quantidade</mat-label>
+                <input matInput formControlName="amount" required (keyup)="setAmount($event)" #input>
+                <mat-error *ngIf="manageOrderForm.controls.amount.touched && manageOrderForm.controls.amount.invalid">
+                    <span *ngIf="manageOrderForm.controls.amount.errors.required">Este campo é obrigatório</span>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" fxFlex>
+                <mat-label>Total</mat-label>
+                <input matInput formControlName="total" required readonly>
+                <mat-error *ngIf="manageOrderForm.controls.total.touched && manageOrderForm.controls.total.invalid">
+                    <span *ngIf="manageOrderForm.controls.total.errors.required">Este campo é obrigatório</span>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row wrap">
+            <mat-form-field appearance="fill" fxFlex>
+                <mat-label>Mecânico</mat-label>
+                <mat-select formControlName="mechanic">
+                    <mat-option *ngFor="let mechanic of mechanics" [value]="mechanic.name">{{mechanic.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" fxFlex>
+                <mat-label>Observação</mat-label>
+                <input matInput formControlName="observation" required>
+                <mat-error *ngIf="manageOrderForm.controls.observation.touched && manageOrderForm.controls.observation.invalid">
+                    <span *ngIf="manageOrderForm.controls.observation.errors.required">Este campo é obrigatório</span>
+                </mat-error>
+            </mat-form-field>
+            <!--<mat-form-field appearance="fill" fxFlex>
+                <mat-label>Preço</mat-label>
+                <input matInput formControlName="price" required readonly>
+                <mat-error *ngIf="manageOrderForm.controls.price.touched && manageOrderForm.controls.price.invalid">
+                    <span *ngIf="manageOrderForm.controls.price.errors.required">Este campo é obrigatório</span>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" fxFlex>
+                <mat-label>Quantidade</mat-label>
+                <input matInput formControlName="amount" required (keyup)="setAmount($event)" #input>
+                <mat-error *ngIf="manageOrderForm.controls.amount.touched && manageOrderForm.controls.amount.invalid">
+                    <span *ngIf="manageOrderForm.controls.amount.errors.required">Este campo é obrigatório</span>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" fxFlex>
+                <mat-label>Total</mat-label>
+                <input matInput formControlName="total" required readonly>
+                <mat-error *ngIf="manageOrderForm.controls.total.touched && manageOrderForm.controls.total.invalid">
+                    <span *ngIf="manageOrderForm.controls.total.errors.required">Este campo é obrigatório</span>
+                </mat-error>
+            </mat-form-field>-->
+        </div>
+    </div>
+</form>
+<div>
+    <button mat-flat-button color="primary" [disabled]="validateProductAdd()" (click)="add()">Adicionar</button>
+    <button mat-flat-button color="primary" class="float-right">Valor Total: {{totalAmount}}</button>
+</div>
+</mat-card>
+<hr>
+<div class="responsive_table">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Nome</th>
+            <td mat-cell *matCellDef="let element">{{element.name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="supplier">
+            <th mat-header-cell *matHeaderCellDef>Fornecedor</th>
+            <td mat-cell *matCellDef="let element">{{element.supplier}}</td>
+        </ng-container>
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Preço</th>
+            <td mat-cell *matCellDef="let element">{{element.price}}</td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>Quantidade</th>
+            <td mat-cell *matCellDef="let element">{{element.amount}}</td>
+        </ng-container>
+        <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef>Total</th>
+            <td mat-cell *matCellDef="let element">{{element.total}}</td>
+        </ng-container>
+        <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef>Excluir</th>
+            <td mat-cell *matCellDef="let element;let i = index" class="action-link">
+                <button mat-icon-button color="primary" matToolTip="Excluir" (click)="handleDeleteAction(i,element)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></tr>
+        <tr mat-row *matRowDef="let row;columns:displayedColumns;"></tr>
+    </table>
+</div>
