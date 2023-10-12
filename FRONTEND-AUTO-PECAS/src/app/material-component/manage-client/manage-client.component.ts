@@ -31,7 +31,7 @@ export class ManageClientComponent implements OnInit {
   }
 
   tableData() {
-    this.clientService.getProducts().subscribe((response: any) => {
+    this.clientService.getClients().subscribe((response: any) => {
       this.ngxService.stop();
       this.dataSource = new MatTableDataSource(response);
     }, (error: any) => {

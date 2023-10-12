@@ -22,8 +22,12 @@ export class ClientService {
     })
   }
 
-  getProducts() {
+  getClients() {
     return this.httpClient.get(this.url + "/client/get/");
+  }
+
+  getById(id: any) {
+    return this.httpClient.get(this.url + "/client/getById/" + id);
   }
 
   updateStatus(data: any) {

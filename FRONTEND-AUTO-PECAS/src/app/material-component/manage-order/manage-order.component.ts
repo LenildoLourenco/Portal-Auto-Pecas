@@ -8,6 +8,7 @@ import { SupplierService } from 'src/app/services/supplier.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 import { saveAs } from 'file-saver';
 import { MechanicService } from 'src/app/services/mechanic.service';
+import { ClientService } from 'src/app/services/client.service';
 
 @Component({
   selector: 'app-manage-order',
@@ -20,6 +21,7 @@ export class ManageOrderComponent implements OnInit {
   manageOrderForm: any = FormGroup;
   suppliers: any = [];
   mechanics: any = [];
+  clients: any = [];
   products: any = [];
   price: any;
   totalAmount: number = 0
@@ -29,6 +31,7 @@ export class ManageOrderComponent implements OnInit {
     private supplierService: SupplierService,
     private productService: ProductService,
     private mechanicService: MechanicService,
+    private clientService: ClientService,
     private snackbarService: SnackbarService,
     private billService: BillService,
     private ngxService: NgxUiLoaderService) { }
@@ -37,6 +40,7 @@ export class ManageOrderComponent implements OnInit {
     this.ngxService.start();
     this.getSuppliers();
     this.getMechanics();
+    this.getClients();
     this.manageOrderForm = this.formBuilder.group({
       name: [null, [Validators.required, Validators.pattern(GlobalConstants.nameRegex)]],
       email: [null, [Validators.required, Validators.pattern(GlobalConstants.emailRegex)]],
@@ -122,6 +126,41 @@ export class ManageOrderComponent implements OnInit {
     })
   }
 
+  getClients() {
+    this.clientService.getClients().subscribe((response: any) => {
+      this.ngxService.stop();
+      this.clients = response;
+    }, (error: any) => {
+      this.ngxService.stop();
+      if (error.error?.message) {
+        this.responseMessage = error.error?.message;
+      }
+      else {
+        this.responseMessage = GlobalConstants.genericError;
+      }
+      this.snackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);
+    })
+  }
+
+  getClientDetails(value: any) {
+    this.clientService.getById(value.id).subscribe((response: any) => {
+      //this.price = response.price;
+      this.manageOrderForm.controls['email'].setValue(response.email);
+      this.manageOrderForm.controls['cpf'].setValue(response.cpf);
+      this.manageOrderForm.controls['contactNumber'].setValue(response.contactNumber);
+      this.manageOrderForm.controls['address'].setValue(response.address);
+    }, (error: any) => {
+      this.ngxService.stop();
+      if (error.error?.message) {
+        this.responseMessage = error.error?.message;
+      }
+      else {
+        this.responseMessage = GlobalConstants.genericError;
+      }
+      this.snackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);
+    })
+  }
+
   setAmount(value: any) {
     var temp = this.manageOrderForm.controls['amount'].value;
     if (temp > 0) {
@@ -177,7 +216,7 @@ export class ManageOrderComponent implements OnInit {
     this.ngxService.start();
     var formData = this.manageOrderForm.value;
     var data = {
-      name: formData.name,
+      name: formData.name.name,
       email: formData.email,
       contactNumber: formData.contactNumber,
       cpf: formData.cpf,

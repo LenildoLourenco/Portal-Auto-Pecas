@@ -10,12 +10,18 @@
             <div fxLayout="row wrap">
                 <mat-form-field appearance="fill" fxFlex>
                     <mat-label>Nome</mat-label>
+                    <mat-select formControlName="name" (selectionChange)="getClientDetails($event.value)">
+                        <mat-option *ngFor="let client of clients" [value]="client">{{client.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!--<mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Nome</mat-label>
                     <input matInput formControlName="name" required>
                     <mat-error *ngIf="manageOrderForm.controls.name.touched && manageOrderForm.controls.name.invalid">
                         <span *ngIf="manageOrderForm.controls.name.errors.required">Este campo é obrigatório</span>
                         <span *ngIf="manageOrderForm.controls.name.errors.pattern">Este nome é inválido</span>
                     </mat-error>
-                </mat-form-field>
+                </mat-form-field>-->
                 <mat-form-field appearance="fill" fxFlex>
                     <mat-label>Email</mat-label>
                     <input matInput formControlName="email" required>
