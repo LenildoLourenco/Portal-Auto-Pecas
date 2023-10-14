@@ -14,7 +14,7 @@ const MENUITEMS = [
     { state: 'client', name: 'Clientes', icon: 'groups', role: 'administrador' },
     { state: 'mechanic', name: 'Mecânicos', icon: 'assignment_ind', role: 'administrador' },
     { state: 'order', name: 'Ordens de Serviços', icon: 'assignment_turned_in', role: '' },
-    { state: 'bill', name: 'Pagamentos', icon: 'account_balance_wallet', role: '' }
+    { state: 'bill', name: 'Serviços', icon: 'account_balance_wallet', role: '' }
 ];
 
 @Injectable()
